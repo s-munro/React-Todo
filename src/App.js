@@ -44,11 +44,31 @@ class App extends React.Component {
     const handleDelete = (e) => {
       e.preventDefault();
       console.log("this should delete something");
+      this.setState({
+        todoItems: this.state.todoItems.filter((item) => {
+          console.log("item", item);
+          return !item.completed;
+        }),
+      });
+      console.log(this.state.todoItems);
     };
 
-    const handleCheck = (e) => {
+    const handleCheck = (itemId, e) => {
       e.target.classList.toggle("checked");
       console.log("click!");
+
+      this.setState({
+        todoItems: this.state.todoItems.map((item) => {
+          if (itemId === item.id) {
+            return {
+              ...item,
+              completed: !item.completed,
+            };
+          } else {
+            return item;
+          }
+        }),
+      });
     };
 
     return (
