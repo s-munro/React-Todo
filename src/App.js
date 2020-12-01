@@ -1,5 +1,8 @@
 import React from "react";
 import TodoForm from "./components/TodoForm";
+import TodoList from "./components/TodoList";
+
+import "./components/Todo.css";
 
 const initialValue = "";
 class App extends React.Component {
@@ -24,14 +27,14 @@ class App extends React.Component {
     const handleSubmit = (e) => {
       e.preventDefault();
 
+      // establishing 'newItem' variable, to be pushed
       let newItem = {
         name: this.state.formValue,
         id: Date.now(),
         completed: false,
       };
-
+      // pushing newItem into the array and resetting form
       this.state.todoItems.push(newItem);
-      console.log(this.state.todoItems);
       this.setState({
         formValue: initialValue,
       });
@@ -43,6 +46,11 @@ class App extends React.Component {
       console.log("this should delete something");
     };
 
+    const handleCheck = (e) => {
+      e.target.classList.toggle("checked");
+      console.log("click!");
+    };
+
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
@@ -52,6 +60,7 @@ class App extends React.Component {
           handleDelete={handleDelete}
           formValue={this.state.formValue}
         />
+        <TodoList todoItems={this.state.todoItems} handleCheck={handleCheck} />
       </div>
     );
   }
